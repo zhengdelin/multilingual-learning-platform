@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/multilingual-learning-platform/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/multilingual-learning-platform/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/multilingual-learning-platform",
+  "projects": {
+    "multilingual-learning-platform": {
+      "type": "application",
+      "root": "apps/multilingual-learning-platform",
+      "entryFile": "main",
+      "sourceRoot": "apps/multilingual-learning-platform/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/multilingual-learning-platform/tsconfig.app.json"
+      }
+    },
+    "zh-tw": {
+      "type": "application",
+      "root": "apps/zh-tw",
+      "entryFile": "main",
+      "sourceRoot": "apps/zh-tw/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/zh-tw/tsconfig.app.json"
+      }
+    },
+    "moe-dict": {
+      "type": "application",
+      "root": "apps/moe-dict",
+      "entryFile": "main",
+      "sourceRoot": "apps/moe-dict/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/moe-dict/tsconfig.app.json"
+      }
+    },
+    "text-to-speech": {
+      "type": "application",
+      "root": "apps/text-to-speech",
+      "entryFile": "main",
+      "sourceRoot": "apps/text-to-speech/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/text-to-speech/tsconfig.app.json"
+      }
+    }
+  }
+}
