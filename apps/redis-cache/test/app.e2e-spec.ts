@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
-import { ZhTwModule } from './../src/zh-tw.module';
+import { RedisCacheModule } from './../src/redis-cache.module';
 
-describe('ZhTwController (e2e)', () => {
+describe('RedisCacheController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [ZhTwModule],
+      imports: [RedisCacheModule],
     }).compile();
 
     app = moduleFixture.createNestApplication();

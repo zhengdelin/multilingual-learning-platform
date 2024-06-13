@@ -4,7 +4,7 @@ import { TextToSpeechModule } from "./text-to-speech.module";
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(TextToSpeechModule, {
-    transport: Transport.REDIS,
+    transport: Transport.TCP,
     options: {
       port: 3002,
     },

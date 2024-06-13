@@ -1,6 +1,6 @@
 import { Catch, HttpStatus, RpcExceptionFilter } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
-import { ApiResponse } from "apps/global/dto/api-response.dto";
+import { ApiResponse } from "apps/multilingual-learning-platform/src/dto/api-response.dto";
 import { AxiosError } from "axios";
 import { Observable, throwError } from "rxjs";
 

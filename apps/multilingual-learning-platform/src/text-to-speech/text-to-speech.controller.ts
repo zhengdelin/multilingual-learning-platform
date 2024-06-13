@@ -1,10 +1,11 @@
-import { Controller, Get, Inject, Param } from "@nestjs/common";
-import { ClientProxy } from "@nestjs/microservices";
+import { Controller, Get, Param } from "@nestjs/common";
+import { Client, ClientProxy } from "@nestjs/microservices";
+import { MSTextToSpeech } from "../common/constants/microservices";
 
 @Controller(":lang/text-to-speech")
 export class TextToSpeechController {
-  @Inject("TEXT_TO_SPEECH")
-  private readonly ttsClient: ClientProxy;
+  @Client(MSTextToSpeech)
+  private readonly client: ClientProxy;
 
   @Get()
   test() {
@@ -12,6 +13,6 @@ export class TextToSpeechController {
   }
   @Get(":text")
   textToSpeech(@Param("text") text: string, @Param("lang") lang: string) {
-    return this.ttsClient.send("textToSpeech", { text, lang });
+    return this.client.send("textToSpeech", { text, lang });
   }
 }
