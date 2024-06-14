@@ -15,3 +15,10 @@ export const MSTextToSpeech: ClientOptions = {
     port: 3002,
   },
 };
+
+export const MSCache: ClientOptions = {
+  transport: Transport.TCP,
+  options: {
+    port: 16337,
+  },
+};

@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "concurrently --kill-others \"nest start multilingual-learning-platform --watch\" \"nest start moe-dict --watch\" \"nest start text-to-speech --watch\"",
+    "start:dev": "concurrently --kill-others \"nest start multilingual-learning-platform --watch\" \"nest start moe-dict --watch\" \"nest start text-to-speech --watch\" \"nest start redis-cache --watch\"",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/multilingual-learning-platform/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
@@ -32,7 +32,8 @@
     "cache-manager-redis-store": "^3.0.1",
     "microsoft-cognitiveservices-speech-sdk": "^1.38.0",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",

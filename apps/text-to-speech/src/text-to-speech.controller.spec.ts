@@ -19,7 +19,7 @@ describe("TextToSpeechController", () => {
 
   describe("root", () => {
     it('should return "Hello World!"', () => {
-      expect(textToSpeechController.textToSpeech("test", TextToSpeechLang.CHINESE)).toBe("txt");
+      expect(textToSpeechController.transformTextToSpeech("test", TextToSpeechLang.CHINESE)).toBe("txt");
     });
   });
 });
