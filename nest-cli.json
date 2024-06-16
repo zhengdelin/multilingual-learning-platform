@@ -45,6 +45,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/redis-cache/tsconfig.app.json"
       }
+    },
+    "speech-to-text": {
+      "type": "application",
+      "root": "apps/speech-to-text",
+      "entryFile": "main",
+      "sourceRoot": "apps/speech-to-text/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/speech-to-text/tsconfig.app.json"
+      }
     }
   }
 }

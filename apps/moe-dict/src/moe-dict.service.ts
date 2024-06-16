@@ -61,4 +61,13 @@ export class MoeDictService {
       throw new RpcException(err);
     }
   }
+
+  async getXref(type: MoeDictType) {
+    try {
+      const { data } = await firstValueFrom(this.httpService.get(`${BASE_URL}/${type}/xref.json`));
+      return data;
+    } catch (err) {
+      throw new RpcException(err);
+    }
+  }
 }

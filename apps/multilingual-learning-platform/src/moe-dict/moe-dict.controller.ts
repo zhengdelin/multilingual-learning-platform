@@ -55,4 +55,9 @@ export class MoeDictController {
   getEntries(@Param("lang") lang: Language) {
     return this.client.send({ cmd: `getEntries` }, { type: lang }).pipe(customCatchError());
   }
+
+  @Get("xref")
+  getXref(@Param("lang") lang: Language) {
+    return this.client.send({ cmd: `getXref` }, { type: lang }).pipe(customCatchError());
+  }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
 import { Client, ClientProxy } from "@nestjs/microservices";
 import { CacheService } from "../cache/cache.service";
 import { MSTextToSpeech } from "../common/constants/microservices";
@@ -11,10 +11,10 @@ export class TextToSpeechController {
 
   @Get()
   test() {
-    return "text success";
+    return "Hello TextToSpeech!";
   }
-  @Get(":text")
-  async textToSpeech(@Param("text") text: string, @Param("lang") lang: string) {
+  @Post()
+  async textToSpeech(@Body("text") text: string, @Param("lang") lang: string) {
     return await this.cacheService.with(`tts:${lang}-${text}`, () => {
       return this.client.send({ cmd: "textToSpeech" }, { text, lang });
     });

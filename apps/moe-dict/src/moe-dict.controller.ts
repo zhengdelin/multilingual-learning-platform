@@ -45,4 +45,9 @@ export class MoeDictController {
   async getEntries(@Payload("type") type: PayloadType) {
     return this.moeDictService.getEntries(PAYLOAD_TYPES[type]);
   }
+
+  @MessagePattern({ cmd: "getXref" })
+  async getXref(@Payload("type") type: PayloadType) {
+    return this.moeDictService.getXref(PAYLOAD_TYPES[type]);
+  }
 }
