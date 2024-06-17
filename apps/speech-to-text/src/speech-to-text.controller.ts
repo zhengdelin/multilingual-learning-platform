@@ -7,7 +7,11 @@ export class SpeechToTextController {
   constructor(private readonly speechToTextService: SpeechToTextService) {}
 
   @MessagePattern({ cmd: "speechToText" })
-  async speechToText(@Payload("lang") lang: string) {
-    return await this.speechToTextService.recognizeFromFile(lang);
+  async speechToText(
+    @Payload("lang") lang: string,
+    @Payload("file") file: Express.Multer.File,
+    @Payload("filepath") filepath: string,
+  ) {
+    return await this.speechToTextService.recognizeFromFile(lang, filepath);
   }
 }

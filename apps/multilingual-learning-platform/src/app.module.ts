@@ -6,6 +6,7 @@ import { AppService } from "./app.service";
 import { CacheModule } from "./cache/cache.module";
 import { LoggerMiddleware } from "./common/middleware/logger.middleware";
 import { MoeDictModule } from "./moe-dict/moe-dict.module";
+import { SpeechToTextModule } from "./speech-to-text/speech-to-text.module";
 import { TextToSpeechModule } from "./text-to-speech/text-to-speech.module";
 
 @Module({
@@ -13,6 +14,7 @@ import { TextToSpeechModule } from "./text-to-speech/text-to-speech.module";
     MoeDictModule,
     TextToSpeechModule,
     CacheModule,
+    SpeechToTextModule,
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), "public"),
     }),

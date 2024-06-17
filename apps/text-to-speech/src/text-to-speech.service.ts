@@ -18,18 +18,21 @@ function getSavePath(lang: TextToSpeechLang, fullFilename: string) {
 
 @Injectable()
 export class TextToSpeechService {
+  private speechConfig: sdk.SpeechConfig;
+  constructor() {
+    this.speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
+  }
   transformTextToSpeech(text: string, lang: TextToSpeechLang) {
     return new Promise<string>((resolve, reject) => {
       const filename = `${uuidV4()}.wav`;
       const { absolute: audioFile, relative: relativeAudioFile } = getSavePath(lang, filename);
       // This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
-      const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
       const audioConfig = sdk.AudioConfig.fromAudioFileOutput(audioFile);
 
       // The language of the voice that speaks.
-      speechConfig.speechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
+      this.speechConfig.speechSynthesisVoiceName = "en-US-AvaMultilingualNeural";
       // Create the speech synthesizer.
-      let synthesizer = new sdk.SpeechSynthesizer(speechConfig, audioConfig);
+      let synthesizer = new sdk.SpeechSynthesizer(this.speechConfig, audioConfig);
 
       synthesizer.speakTextAsync(
         text,
