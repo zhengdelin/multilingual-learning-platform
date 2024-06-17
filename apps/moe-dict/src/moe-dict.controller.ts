@@ -8,9 +8,14 @@ const PAYLOAD_TYPES = {
   minnan: MoeDictType.MINNAN,
   hakka: MoeDictType.HAKKA,
   bilateral: MoeDictType.BILATERAL,
+  raw: MoeDictType.RAW,
 };
 
 type PayloadType = keyof typeof PAYLOAD_TYPES;
+const MoeDictTypeToPayloadType = Object.entries(PAYLOAD_TYPES).reduce(
+  (acc, [key, value]) => ({ ...acc, [value]: key }),
+  {} as Record<MoeDictType, PayloadType>,
+);
 
 @Controller()
 export class MoeDictController {
@@ -48,6 +53,14 @@ export class MoeDictController {
 
   @MessagePattern({ cmd: "getXref" })
   async getXref(@Payload("type") type: PayloadType) {
-    return this.moeDictService.getXref(PAYLOAD_TYPES[type]);
+    const xref = await this.moeDictService.getXref(PAYLOAD_TYPES[type]);
+
+    return Object.entries(xref).reduce(
+      (acc, [key, value]) => {
+        acc[MoeDictTypeToPayloadType[key]] = value;
+        return acc;
+      },
+      {} as Record<PayloadType, any>,
+    );
   }
 }

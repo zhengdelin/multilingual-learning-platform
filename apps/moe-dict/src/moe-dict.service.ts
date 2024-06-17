@@ -10,7 +10,11 @@ export class MoeDictService {
   constructor(private readonly httpService: HttpService) {}
   async search(kw: string, type: MoeDictType) {
     try {
-      const { data } = await firstValueFrom(this.httpService.get(`${BASE_URL}/${type}/${kw}.json`));
+      let url = `${BASE_URL}/${type}/${kw}`;
+      if (type !== MoeDictType.RAW) {
+        url += ".json";
+      }
+      const { data } = await firstValueFrom(this.httpService.get(url));
       return data;
     } catch (err) {
       throw new RpcException(err);

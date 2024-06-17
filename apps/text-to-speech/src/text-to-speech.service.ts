@@ -4,18 +4,24 @@ import * as sdk from "microsoft-cognitiveservices-speech-sdk";
 import { join } from "path";
 import { v4 as uuidV4 } from "uuid";
 import { TextToSpeechLang } from "./common/constants/types";
-function getSavePath(lang: TextToSpeechLang, fullFilename: string) {
-  const path = join(process.cwd(), `public/audio/${lang}`);
-  if (!fs.existsSync(path)) fs.mkdirSync(path, { recursive: true });
 
-  return `${path}/${fullFilename}`;
+function getSavePath(lang: TextToSpeechLang, fullFilename: string) {
+  const relativeDirPath = `audio/${lang}`;
+  const absoluteDirPath = join(process.cwd(), `public/${relativeDirPath}`);
+  if (!fs.existsSync(absoluteDirPath)) fs.mkdirSync(absoluteDirPath, { recursive: true });
+
+  return {
+    absolute: join(absoluteDirPath, fullFilename),
+    relative: join(relativeDirPath, fullFilename),
+  };
 }
 
 @Injectable()
 export class TextToSpeechService {
   transformTextToSpeech(text: string, lang: TextToSpeechLang) {
     return new Promise<string>((resolve, reject) => {
-      const audioFile = getSavePath(lang, `${uuidV4()}.wav`);
+      const filename = `${uuidV4()}.wav`;
+      const { absolute: audioFile, relative: relativeAudioFile } = getSavePath(lang, filename);
       // This example requires environment variables named "SPEECH_KEY" and "SPEECH_REGION"
       const speechConfig = sdk.SpeechConfig.fromSubscription(process.env.SPEECH_KEY, process.env.SPEECH_REGION);
       const audioConfig = sdk.AudioConfig.fromAudioFileOutput(audioFile);
@@ -30,7 +36,7 @@ export class TextToSpeechService {
         function (result) {
           if (result.reason === sdk.ResultReason.SynthesizingAudioCompleted) {
             console.log(`語音生成完畢: ${audioFile}`);
-            resolve(audioFile);
+            resolve(relativeAudioFile);
           } else {
             console.error(`語音生成錯誤，${result.errorDetails}，請檢查您的環境變數(resource key and region values)。`);
             reject();
