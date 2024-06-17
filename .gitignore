@@ -3,6 +3,9 @@
 /node_modules
 /build
 
+# public files
+/public
+
 # Logs
 logs
 *.log
