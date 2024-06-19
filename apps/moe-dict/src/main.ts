@@ -7,7 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(MoeDictModule, {
     transport: Transport.TCP,
     options: {
-      port: 3001,
+      host: "0.0.0.0",
+      port: +process.env.MOE_DICT_PORT,
     },
   });
   app.useGlobalFilters(new ExceptionFilter());

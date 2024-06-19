@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Client, ClientProxy } from "@nestjs/microservices";
-import { firstValueFrom, Observable } from "rxjs";
+import { defaultIfEmpty, firstValueFrom, Observable } from "rxjs";
 import { MSCache } from "../common/constants/microservices";
 
 interface CacheWithConfig {
@@ -16,11 +16,15 @@ export class CacheService {
   private readonly client: ClientProxy;
 
   async get<T>(key: string) {
-    return await firstValueFrom(this.client.send<T>({ cmd: "get" }, key));
+    return await firstValueFrom(this.client.send<T>({ cmd: "get" }, key).pipe(defaultIfEmpty(null)));
   }
 
   async set(key: string, value: any, ttl?: number) {
-    await firstValueFrom(this.client.send({ cmd: "set" }, { key, value, ttl }));
+    await firstValueFrom(this.client.send({ cmd: "set" }, { key, value, ttl }).pipe(defaultIfEmpty(null)));
+  }
+
+  async getStore() {
+    return await firstValueFrom(this.client.send({ cmd: "getStore" }, {}).pipe(defaultIfEmpty(null)));
   }
 
   async with(key: string, handler: CacheWithHandler, { ttl, transform = (value: any) => value }: CacheWithConfig = {}) {

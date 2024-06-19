@@ -21,4 +21,8 @@ export class RedisCacheService {
   reset() {
     return this.cache.reset();
   }
+
+  getStore() {
+    return this.cache.store;
+  }
 }

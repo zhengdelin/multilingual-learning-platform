@@ -15,8 +15,8 @@ export class RedisCacheController {
 
   @MessagePattern({ cmd: "set" })
   set(@Payload("key") key: string, @Payload("value") value: any, @Payload("ttl") ttl?: number) {
-    log(`Set Key: ${key}, Value: ${value}, TTL: ${ttl}`);
-    return this.redisCacheService.set(key, value, ttl);
+    log(`Set Key: ${key}, Value: ${value}, TTL: ${ttl}${typeof ttl}`);
+    return this.redisCacheService.set(key, value);
   }
 
   @MessagePattern({ cmd: "del" })
@@ -29,5 +29,11 @@ export class RedisCacheController {
   reset() {
     log(`Reset`);
     return this.redisCacheService.reset();
+  }
+
+  @MessagePattern({ cmd: "getStore" })
+  getStore() {
+    log(`get Store`);
+    return this.redisCacheService.getStore();
   }
 }

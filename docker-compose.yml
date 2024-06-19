@@ -1,0 +1,84 @@
+version: "3.7"
+services:
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/multilingual-learning-platform/Dockerfile
+    container_name: api-gateway
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    networks:
+      - backend
+    restart: always
+    volumes:
+      - shared:/app/public
+  cache:
+    build:
+      context: .
+      dockerfile: ./apps/redis-cache/Dockerfile
+    container_name: cache
+    networks:
+      - backend
+    links:
+      - redis
+    env_file:
+      - .env
+    depends_on:
+      - redis
+    restart: always
+  speech-to-text:
+    build:
+      context: .
+      dockerfile: ./apps/speech-to-text/Dockerfile
+    container_name: speech-to-text
+    networks:
+      - backend
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - shared:/app/public
+  text-to-speech:
+    build:
+      context: .
+      dockerfile: ./apps/text-to-speech/Dockerfile
+    container_name: text-to-speech
+    networks:
+      - backend
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - shared:/app/public
+  moe-dict:
+    build:
+      context: .
+      dockerfile: ./apps/moe-dict/Dockerfile
+    container_name: moe-dict
+    networks:
+      - backend
+    env_file:
+      - .env
+    restart: always
+  redis:
+    container_name: redis-db
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - backend
+    volumes:
+      - redis-data:/data
+    privileged: true
+# docker-compose up -d
+# docker ps
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  shared:
+  redis-data:

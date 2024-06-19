@@ -6,6 +6,8 @@
 # public files
 /public
 
+/redis-data
+
 # Logs
 logs
 *.log

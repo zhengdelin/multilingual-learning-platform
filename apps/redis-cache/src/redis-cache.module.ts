@@ -7,15 +7,19 @@ import { RedisCacheService } from "./redis-cache.service";
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    CacheModule.registerAsync({
+    CacheModule.register({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        store: redisStore as any,
-        host: configService.get("REDIS_HOST"),
-        port: configService.get("REDIS_PORT"),
+      useFactory: async (configService: ConfigService) => {
+        return {
+          isGlobal: true,
+          store: redisStore as any,
+
+          host: configService.get("REDIS_HOST"),
+          port: configService.get("REDIS_PORT"),
+        };
         // ttl: configService.get("REDIS_TTL"),
-      }),
+      },
     }),
   ],
   controllers: [RedisCacheController],

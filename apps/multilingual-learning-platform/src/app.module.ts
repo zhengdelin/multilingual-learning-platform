@@ -1,4 +1,5 @@
 import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
 import { AppController } from "./app.controller";
@@ -18,6 +19,7 @@ import { TextToSpeechModule } from "./text-to-speech/text-to-speech.module";
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), "public"),
     }),
+    ConfigModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [AppService],
